@@ -36,10 +36,10 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
-      - name: Create and push tag v2.2.5
+      - name: Create and push tag v1.0.0
         run: |
-          git tag v2.2.5
-          git push origin v2.2.5
+          git tag v1.0.0
+          git push origin v1.0.0
 
       - name: Upload binaries to release
         uses: svenstaro/upload-release-action@v2
