@@ -32,13 +32,23 @@ jobs:
         run: zip -qq -r -9 PrivyScintigloV1.ipa Payload
         working-directory: build/ios/iphoneos
 
-      - name: Upload binaries to release
+      # Dynamically create a tag based on workflow run number
+      - name: Create dynamic tag
+        run: |
+          TAG=v${{ github.run_number }}
+          git config --global user.email "pratik.cemd@gmail.com"
+          git config --global user.name "Pratik"
+          git tag -fa $TAG -m "auto-created tag $TAG"
+          git push origin $TAG --force
+        shell: bash
+
+      - name: Upload IPA to release
         uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           file: build/ios/iphoneos/PrivyScintigloV1.ipa
-          tag: v2.2.5
-          release-type: draft     # <-- ensures action creates release if tag missing
+          tag: v${{ github.run_number }}
+          release-type: draft
           overwrite: true
-          name: "PrivyScintiglo v2.2.5"
-          body: "doctor profile add"
+          name: "PrivyScintiglo v${{ github.run_number }}"
+          body: "new created delli7 add"
