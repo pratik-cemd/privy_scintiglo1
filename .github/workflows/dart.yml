@@ -5,39 +5,38 @@ on:
 
 jobs:
   build-ios:
-    name: iOS Build
+    name: 🎉 iOS3 Build
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@v3
 
       - uses: subosito/flutter-action@v2
         with:
-          channel: stable
+          channel: 'stable'
           architecture: x64
-
       - run: flutter pub get
+      
 
       - run: pod repo update
         working-directory: ios
 
-      - run: pod install
-        working-directory: ios
-
       - run: flutter build ios --release --no-codesign
 
-      - run: mkdir -p build/ios/iphoneos/Payload
-      - run: cp -R build/ios/iphoneos/Runner.app build/ios/iphoneos/Payload/
+      - run: mkdir Payload
+        working-directory: build/ios/iphoneos
+
+      - run: mv Runner.app/ Payload
+        working-directory: build/ios/iphoneos
 
       - name: Zip output
-        run: cd build/ios/iphoneos && zip -qr FlutterIpaExport.ipa Payload
-
-      # 🔹 Git tag creation step removed (manual tag already created)
+        run: zip -qq -r -9 FlutterIpaExport.ipa Payload
+        working-directory: build/ios/iphoneos
 
       - name: Upload binaries to release
         uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           file: build/ios/iphoneos/FlutterIpaExport.ipa
-          tag: v1.0.0        # must match the manual tag in GitHub
+          tag: v2.2.5
           overwrite: true
-          body: "Initial release with doctor profile feature"
+          body: "doctor profile add"
