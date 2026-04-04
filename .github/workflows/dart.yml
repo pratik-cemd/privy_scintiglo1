@@ -38,7 +38,7 @@ jobs:
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           file: build/ios/iphoneos/FlutterIpaExport.ipa
-          tag: v1.0.0           # tag manually GitHub me create kiya hua
+          tag: v1.0.1          # tag manually GitHub me create kiya hua
           overwrite: true
           body: "Initial release with doctor profile feature"
 
