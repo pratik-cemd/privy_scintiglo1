@@ -33,14 +33,11 @@ jobs:
       - name: Zip output
         run: cd build/ios/iphoneos && zip -qq -r -9 FlutterIpaExport.ipa Payload
 
-      - name: Upload binaries to release
+      - name: Upload binaries to existing release
         uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           file: build/ios/iphoneos/FlutterIpaExport.ipa
-          tag: v1.0.1          # tag manually GitHub me create kiya hua
+          tag: v1.0.0           # manually create kiya hua tag GitHub UI me
           overwrite: true
           body: "Initial release with doctor profile feature"
-
-
-
