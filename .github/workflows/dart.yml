@@ -5,14 +5,14 @@ on:
 
 jobs:
   build-ios:
-    name: 🎉 iOS Build
+    name: iOS Build
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@v3
 
       - uses: subosito/flutter-action@v2
         with:
-          channel: 'stable'
+          channel: stable
           architecture: x64
 
       - run: flutter pub get
@@ -31,6 +31,16 @@ jobs:
       - name: Zip output
         run: cd build/ios/iphoneos && zip -qr FlutterIpaExport.ipa Payload
 
+      - name: Set Git user
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Create and push tag v2.2.5
+        run: |
+          git tag v2.2.5
+          git push origin v2.2.5
+
       - name: Upload binaries to release
         uses: svenstaro/upload-release-action@v2
         with:
@@ -39,4 +49,3 @@ jobs:
           tag: v2.2.5
           overwrite: true
           body: "doctor profile add"
-          create_release: true
