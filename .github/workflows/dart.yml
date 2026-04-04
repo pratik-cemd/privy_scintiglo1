@@ -14,8 +14,8 @@ jobs:
         with:
           channel: 'stable'
           architecture: x64
+
       - run: flutter pub get
-      
 
       - run: pod repo update
         working-directory: ios
@@ -38,5 +38,7 @@ jobs:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           file: build/ios/iphoneos/PrivyScintigloV1.ipa
           tag: v2.2.5
+          release-type: draft     # <-- ensures action creates release if tag missing
           overwrite: true
+          name: "PrivyScintiglo v2.2.5"
           body: "doctor profile add"
