@@ -39,3 +39,4 @@ jobs:
           tag: v2.2.5
           overwrite: true
           body: "doctor profile add"
+          create_release: true
