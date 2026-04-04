@@ -29,32 +29,18 @@ jobs:
         run: |
           mkdir -p build/ios/iphoneos/Payload
           mv build/ios/iphoneos/Runner.app build/ios/iphoneos/Payload/
-          
+
       - name: Zip output
         run: cd build/ios/iphoneos && zip -qq -r -9 FlutterIpaExport.ipa Payload
-
-      - name: Set Git config
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-
-      - name: Create tag if not exists
-        env:
-          PAT_TOKEN: ${{ secrets.PAT_TOKEN }}
-        run: |
-          if git rev-parse "v1.0.0" >/dev/null 2>&1; then
-            echo "Tag v1.0.0 already exists"
-          else
-            git tag v1.0.0
-            git push https://x-access-token:$PAT_TOKEN@github.com/${GITHUB_REPOSITORY}.git v1.0.0
-          fi
 
       - name: Upload binaries to release
         uses: svenstaro/upload-release-action@v2
         with:
-          repo_token: ${{ secrets.PAT_TOKEN }}
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
           file: build/ios/iphoneos/FlutterIpaExport.ipa
-          tag: v1.0.0
+          tag: v1.0.0           # tag manually GitHub me create kiya hua
           overwrite: true
           body: "Initial release with doctor profile feature"
+
+
 
